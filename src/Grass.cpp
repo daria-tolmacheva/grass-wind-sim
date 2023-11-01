@@ -15,3 +15,11 @@ Point *Grass::getControlPoints() const
 {
     return m_controlPoints.get();
 }
+
+void Grass::setControlPoints(Point* _controlPoints)
+{
+    for(int i = 1; i < m_bladesNum * 4; ++i) // 4 control points per blade
+    {
+        m_controlPoints[i] = _controlPoints[i];
+    }
+}
