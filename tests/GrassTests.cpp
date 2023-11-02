@@ -2,13 +2,12 @@
 
 #include "Grass.h"
 
-TEST(Grass, ctor)
+TEST(Grass, ctorBladesNum)
 {
     Grass plant(4);
-    int bladesNumber = plant.bladesNum();
-    EXPECT_EQ(bladesNumber, 4);
+    EXPECT_EQ(plant.bladesNum(), 4);
     // 4 Bezier curve control points per blade
-    for (int i = 0; i < bladesNumber * 4; ++i)
+    for (int i = 0; i < plant.bladesNum() * 4; ++i)
     {
         EXPECT_EQ(plant.getControlPoints()[i].x, 0.0f);
         EXPECT_EQ(plant.getControlPoints()[i].y, 0.0f);
@@ -41,5 +40,20 @@ TEST(Grass, setCorrectControlPoints)
         EXPECT_EQ(plant.getControlPoints()[i].x, plantControlPoints[i].x);
         EXPECT_EQ(plant.getControlPoints()[i].y, plantControlPoints[i].y);
         EXPECT_EQ(plant.getControlPoints()[i].z, plantControlPoints[i].z);
+    }
+}
+
+TEST(Grass, ctorVector)
+{
+    Grass plant(std::vector<Point>{{0.0f, 0.0f, 0.0f}, // single blade
+                                   {0.0f, 0.0f, 0.0f},
+                                   {0.0f, 0.0f, 0.0f},
+                                   {0.0f, 0.0f, 0.0f}});
+    EXPECT_EQ(plant.bladesNum(), 1);
+    for (int i = 0; i < plant.bladesNum() * 4; ++i)
+    {
+        EXPECT_EQ(plant.getControlPoints()[i].x, 0.0f);
+        EXPECT_EQ(plant.getControlPoints()[i].y, 0.0f);
+        EXPECT_EQ(plant.getControlPoints()[i].z, 0.0f);
     }
 }

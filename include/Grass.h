@@ -15,6 +15,7 @@ class Grass
 {
 public:
     explicit Grass(int _bladesNum);
+    Grass(std::vector<Point> _controlPoints);
     [[nodiscard]] int bladesNum() const;
     [[nodiscard]] std::vector<Point> getControlPoints() const;
     void setControlPoints(std::vector<Point> _controlPoints);
