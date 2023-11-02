@@ -1,9 +1,8 @@
 #include "Grass.h"
 
-Grass::Grass(int _bladesNum)
+Grass::Grass(int _bladesNum) : m_bladesNum{_bladesNum}
 {
-    m_bladesNum = _bladesNum;
-    m_controlPoints = std::make_unique<Point []>(m_bladesNum*4); // 4 control points per blade
+    m_controlPoints.resize(m_bladesNum * 4); // 4 control points per blade
 }
 
 int Grass::bladesNum() const
@@ -11,15 +10,13 @@ int Grass::bladesNum() const
     return m_bladesNum;
 }
 
-Point *Grass::getControlPoints() const
+std::vector<Point> Grass::getControlPoints() const
 {
-    return m_controlPoints.get();
+    return m_controlPoints;
 }
 
-void Grass::setControlPoints(Point* _controlPoints)
+void Grass::setControlPoints(std::vector<Point> _controlPoints)
 {
-    for(int i = 1; i < m_bladesNum * 4; ++i) // 4 control points per blade
-    {
-        m_controlPoints[i] = _controlPoints[i];
-    }
+    m_controlPoints = _controlPoints; // -> clang tidy suggests to change it to the following line:
+                                      // m_controlPoints = std::move(_controlPoints);
 }

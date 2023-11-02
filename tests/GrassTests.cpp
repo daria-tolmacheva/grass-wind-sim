@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "Grass.h"
 
 TEST(Grass, ctor)
@@ -15,26 +16,26 @@ TEST(Grass, ctor)
     }
 }
 
-TEST (Grass, setControlPoints)
+TEST(Grass, setCorrectControlPoints)
 {
     Grass plant(4);
-    std::unique_ptr<Point []> plantControlPoints(new Point[16] { { 0.0f,  0.0f,  0.0f}, // first blade
-                                                                    { 0.0f,  7.0f,  1.0f},
-                                                                    { 0.0f,  9.0f,  4.0f},
-                                                                    { 0.0f,  10.0f, 6.0f},
-                                                                    { 0.0f,  0.0f,  0.0f}, // second blade
-                                                                    { 0.0f,  7.0f,  0.0f},
-                                                                    { 10.0f, 10.0f, 0.0f},
-                                                                    { 3.0f,  14.0f, 0.0f},
-                                                                    { 0.0f,  0.0f,  0.0f}, // third blade
-                                                                    { 0.0f,  4.0f, -0.5f},
-                                                                    { 0.0f,  4.5f, -5.0f},
-                                                                    { 0.0f,  1.5f, -11.5f},
-                                                                    { 0.0f,  0.0f,  0.0f}, // forth blade
-                                                                    { -1.0f, 8.0f,  0.0f},
-                                                                    { -3.5f, 3.5f,  0.0f},
-                                                                    { -1.5f, 1.5f,  0.0f} });
-    plant.setControlPoints(plantControlPoints.get());
+    std::vector<Point> plantControlPoints = { {0.0f,  0.0f,  0.0f}, // first blade
+                                              {0.0f,  7.0f,  1.0f},
+                                              {0.0f,  9.0f,  4.0f},
+                                              {0.0f,  10.0f, 6.0f},
+                                              {0.0f,  0.0f,  0.0f}, // second blade
+                                              {0.0f,  7.0f,  0.0f},
+                                              {10.0f, 10.0f, 0.0f},
+                                              {3.0f,  14.0f, 0.0f},
+                                              {0.0f,  0.0f,  0.0f}, // third blade
+                                              {0.0f,  4.0f, -0.5f},
+                                              {0.0f,  4.5f, -5.0f},
+                                              {0.0f,  1.5f, -11.5f},
+                                              {0.0f,  0.0f,  0.0f}, // forth blade
+                                              {-1.0f, 8.0f,  0.0f},
+                                              {-3.5f, 3.5f,  0.0f},
+                                              {-1.5f, 1.5f,  0.0f} };
+    plant.setControlPoints(plantControlPoints);
     for(int i = 0; i < plant.bladesNum() * 4; ++i)
     {
         EXPECT_EQ(plant.getControlPoints()[i].x, plantControlPoints[i].x);

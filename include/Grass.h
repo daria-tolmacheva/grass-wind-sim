@@ -1,9 +1,9 @@
 #ifndef GRASS_H_
 #define GRASS_H_
 
-#include <memory>
+#include <vector>
 
-// Placeholder point struct - will replace with NCCA Vec3 (or other) later
+// Placeholder point struct - will potentially replace with NGL::Vec3 (or other) later
 struct Point
 {
     float x = 0.0f;
@@ -16,12 +16,12 @@ class Grass
 public:
     explicit Grass(int _bladesNum);
     [[nodiscard]] int bladesNum() const;
-    [[nodiscard]] Point* getControlPoints() const;
-    void setControlPoints(Point* _controlPoints);
+    [[nodiscard]] std::vector<Point> getControlPoints() const;
+    void setControlPoints(std::vector<Point> _controlPoints);
 
 private:
     int m_bladesNum;
-    std::unique_ptr<Point []> m_controlPoints;
+    std::vector<Point> m_controlPoints;
 };
 
 #endif
