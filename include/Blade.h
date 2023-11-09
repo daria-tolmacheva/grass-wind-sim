@@ -12,6 +12,11 @@ struct Point
 
     Point() = default;
     Point(float _x, float _y, float _z) : x{_x}, y{_y}, z{_z} {}
+
+    bool operator==(const Point &p) const
+    {
+        return(this->x == p.x && this->y == p.y && this->z == this->z);
+    }
 };
 
 class Blade
