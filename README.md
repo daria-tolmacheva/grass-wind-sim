@@ -35,7 +35,6 @@ Stretch goals:
 ## Grass Representation
 
 Each grass blade is represented by the 4 control points of a Bezier curve, and each grass plant consists of multiple grass blades starting in the same point.
+The Blade class represents a single grass blade and hold information relevant to the Bezier curve which represents it as well as any other information relevant to the deformation calculation of it (e.i. orientation vectors of blade segments).
 
-The plant class needs to include a number of strands variable and an array of strands which consists of four control points' coordinates per each strand.
-
-Later I will need to add more information about the strands but I'm keeping it barebone for now.
+The Grass class needs to include a vector of Blade instances to hold the information about all of the grass in the scene(or part of the scene of LOD techniques would be implemented).

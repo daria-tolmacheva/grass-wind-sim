@@ -8,9 +8,18 @@
 4. Initial implementation of Grass class and tests for it.
 
 ## Week 2
+Didn't have much time this week
+1. Research math for the wind simulation and grass blade deformation
+
+## Week 3
 
 TBD
 
-1. Basic OpenGL app?
-2. More of the math constraints and properties of grass blades? (implementation and testing)
-3. ??
+1. More of the math constraints and properties of grass blades? (implementation and testing)
+2. ??
+
+## Week 4 
+TBD
+
+1. Basic OpenGL visualisation?
+2. Basic Qt app to host OpenGL vis
