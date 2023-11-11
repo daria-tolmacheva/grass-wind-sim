@@ -31,6 +31,7 @@ class Blade
 {
 public:
     Blade();
+    static constexpr int controlPointsNum = 4;
     [[nodiscard]] std::vector<Point> getControlPoints() const;
     bool setControlPoint(int _index, Point _point);
     bool setControlPoints(std::vector<Point> _points);

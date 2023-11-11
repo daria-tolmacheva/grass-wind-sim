@@ -2,7 +2,7 @@
 
 Blade::Blade()
 {
-    m_controlPoints.resize(4);
+    m_controlPoints.resize(controlPointsNum);
 }
 
 std::vector<Point> Blade::getControlPoints() const
@@ -12,20 +12,20 @@ std::vector<Point> Blade::getControlPoints() const
 
 bool Blade::setControlPoint(int _index, Point _point)
 {
-    if(_index < 4)
+    if(_index < controlPointsNum)
     {
         m_controlPoints[_index] = _point;
         return true;
     }
     else
-        return false; // only 4 control points exist
+        return false;
 }
 
 bool Blade::setControlPoints(std::vector<Point> _points)
 {
-    if(_points.size() != 4)
+    if(_points.size() != controlPointsNum)
         return false;
-    for(int i = 0; i < 4; ++i)
+    for(int i = 0; i < controlPointsNum; ++i)
     {
         setControlPoint(i, _points[i]);
     }
