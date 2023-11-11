@@ -3,9 +3,11 @@
 
 #include <vector>
 
+/// This function was originally written by Jon Macey
 constexpr float EPSILON = 0.001f;
 #define FCompare(a, b) \
   (((a)-EPSILON) < (b) && ((a) + EPSILON) > (b))
+/// end of function
 
 // Placeholder point struct - will potentially replace with NGL::Vec3 (or other) later
 struct Point
@@ -19,9 +21,9 @@ struct Point
 
     bool operator==(const Point &_p) const
     {
-        return(FCompare(_p.x,x)  &&
-               FCompare(_p.y,y)  &&
-               FCompare(_p.z,z));
+        return(FCompare(x, _p.x)  &&
+               FCompare(y, _p.y)  &&
+               FCompare(z, _p.z));
     }
 };
 
