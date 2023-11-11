@@ -14,6 +14,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Now we add our target executable and the file it is built from
 set(ExecutableName GrassSimulation)
 add_executable(${ExecutableName})
+target_include_directories(${ExecutableName} PRIVATE include)
 target_sources(${ExecutableName} PRIVATE
         src/main.cpp
         src/Grass.cpp

@@ -3,6 +3,10 @@
 
 #include <vector>
 
+constexpr float EPSILON = 0.001f;
+#define FCompare(a, b) \
+  (((a)-EPSILON) < (b) && ((a) + EPSILON) > (b))
+
 // Placeholder point struct - will potentially replace with NGL::Vec3 (or other) later
 struct Point
 {
@@ -13,9 +17,11 @@ struct Point
     Point() = default;
     Point(float _x, float _y, float _z) : x{_x}, y{_y}, z{_z} {}
 
-    bool operator==(const Point &p) const
+    bool operator==(const Point &_p) const
     {
-        return(this->x == p.x && this->y == p.y && this->z == this->z);
+        return(FCompare(_p.x,x)  &&
+               FCompare(_p.y,y)  &&
+               FCompare(_p.z,z));
     }
 };
 
