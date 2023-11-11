@@ -32,7 +32,8 @@ class Blade
 public:
     Blade();
     [[nodiscard]] std::vector<Point> getControlPoints() const;
-    bool addControlPoint(int _index, Point _point);
+    bool setControlPoint(int _index, Point _point);
+    bool setControlPoints(std::vector<Point> _points);
 private:
     std::vector<Point> m_controlPoints;
 };

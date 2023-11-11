@@ -11,14 +11,27 @@ TEST(Blade, ctor)
     }
 }
 
-TEST(Blade, addControlPoint)
+TEST(Blade, setControlPoint)
 {
     Blade b;
-    for(int i; i < 4; ++i)
+    for(int i = 0; i < 4; ++i)
     {
-        b.addControlPoint(i, Point(1.0f, 1.0f, 1.0f));
+        b.setControlPoint(i, Point(1.0f, 1.0f, 1.0f));
         EXPECT_EQ(b.getControlPoints()[i], Point(1.0f, 1.0f, 1.0f));
     }
-    // Fails to add more/less than 4 control points
-    EXPECT_FALSE(b.addControlPoint(4, Point(1.0f, 1.0f, 1.0f)));
+    // Fails to add more than 4 control points
+    EXPECT_FALSE(b.setControlPoint(4, Point(1.0f, 1.0f, 1.0f)));
+}
+
+TEST(Blade, setControlPoints)
+{
+    Blade b;
+    std::vector<Point> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
+                                              {0.0f,  7.0f,  1.0f},
+                                              {0.0f,  9.0f,  4.0f},
+                                              {0.0f,  10.0f, 6.0f} };
+    EXPECT_TRUE(b.setControlPoints(bladeControlPoints));
+    EXPECT_EQ(b.getControlPoints(), bladeControlPoints);
+    // Fails if less/more than 4 control points
+    EXPECT_FALSE(b.setControlPoints({Point(0.0f, 0.0f, 0.0f)}));
 }

@@ -18,7 +18,6 @@ std::vector<Blade> Grass::getBlades() const
 std::vector<Point> Grass::getControlPoints() const
 {
     std::vector<Point> controlPoints;
-    controlPoints.resize(m_blades.size() * 4);
     for(auto blade : m_blades)
     {
         for(int i = 0; i < 4; ++i)
@@ -27,8 +26,24 @@ std::vector<Point> Grass::getControlPoints() const
     return controlPoints;
 }
 
-//void Grass::setControlPoints(std::vector<Point> _controlPoints)
-//{
-//    m_controlPoints = _controlPoints; // -> clang tidy suggests to change it to the following line:
-//                                      // m_controlPoints = std::move(_controlPoints);
-//}
+bool Grass::setBlades(std::vector<Point> _controlPoints)
+{
+    if((_controlPoints.size()/4) != m_blades.size())
+        return false;
+    for(int i = 0; i < m_blades.size(); ++i)
+    {
+        std::vector<Point> bladeControlPoints(&_controlPoints[i*4], &_controlPoints[i*4 + 4]);
+        if(!m_blades[i].setControlPoints(bladeControlPoints))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool Grass::setBlade(int _index, std::vector<Point> _controlPoints)
+{
+    if(_index >= m_blades.size() || _controlPoints.size() != 4)
+        return false;
+    return m_blades[_index].setControlPoints(_controlPoints);
+}

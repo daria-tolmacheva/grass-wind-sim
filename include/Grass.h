@@ -11,7 +11,8 @@ public:
     [[nodiscard]] int bladesNum() const;
     [[nodiscard]] std::vector<Blade> getBlades() const;
     std::vector<Point> getControlPoints() const;
-//    void setBlades(std::vector<Point> _controlPoints);
+    bool setBlades(std::vector<Point> _controlPoints);
+    bool setBlade(int _index, std::vector<Point> _controlPoints);
 
 private:
     std::vector<Blade> m_blades;
