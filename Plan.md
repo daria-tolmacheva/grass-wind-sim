@@ -15,8 +15,10 @@ Didn't have much time this week
 
 TBD
 
-1. More of the math constraints and properties of grass blades? (implementation and testing)
-2. ??
+1. Fixes from feedback + wrap up basics from before.
+2. Class diagram and Design.md
+3. More of the math constraints and properties of grass blades? (implementation and testing)
+4. ??
 
 ## Week 4 
 TBD
