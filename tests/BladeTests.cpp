@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <ngl/Vec3.h>
+#include <cmath>
 
 #include "Blade.h"
 
@@ -41,14 +42,13 @@ TEST(Blade, segmentVector)
 {
     Blade b;
     std::vector<ngl::Vec3> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
-                                              {0.0f,  1.0f,  0.0f},
-                                              {0.0f,  2.0f,  0.0f},
-                                              {0.0f,  3.0f,  0.0f} };
+                                                {0.0f,  1.0f,  0.0f},
+                                                {0.0f,  2.0f,  0.0f},
+                                                {0.0f,  2.0f,  1.0f} };
     b.setControlPoints(bladeControlPoints);
-    for(int i = 0; i < 3; ++i)
-    {
-        EXPECT_EQ(b.getSegmentVectors()[i], ngl::Vec3(0.0f, 1.0f, 0.0f));
-    }
+    EXPECT_EQ(b.getSegmentVectors()[0], ngl::Vec3(0.0f, 1.0f, 0.0f));
+    EXPECT_EQ(b.getSegmentVectors()[1], ngl::Vec3(0.0f, 1.0f, 0.0f));
+    EXPECT_EQ(b.getSegmentVectors()[2], ngl::Vec3(0.0f, 0.0f, 1.0f));
 
 }
 
@@ -58,12 +58,12 @@ TEST(Blade, surfaceVector)
     std::vector<ngl::Vec3> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
                                                   {0.0f,  1.0f,  0.0f},
                                                   {0.0f,  2.0f,  0.0f},
-                                                  {0.0f,  3.0f,  0.0f} };
+                                                  {0.0f,  3.0f,  -1.0f} };
     b.setControlPoints(bladeControlPoints);
-    for(int i = 0; i < 3; ++i)
-    {
-        EXPECT_EQ(b.getSurfaceVectors()[i], ngl::Vec3(/*???*/));
-    }
+    EXPECT_EQ(b.getSurfaceVectors()[0], ngl::Vec3(0.1f, 0.0f, 0.0f));
+    EXPECT_EQ(b.getSurfaceVectors()[1], ngl::Vec3(0.09f, 0.0f, 0.0f));
+    EXPECT_EQ(b.getSurfaceVectors()[2], ngl::Vec3(0.05f, 0.0f, 0.0f));
+
 }
 
 TEST(Blade, normalVector)
@@ -72,10 +72,9 @@ TEST(Blade, normalVector)
     std::vector<ngl::Vec3> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
                                                   {0.0f,  1.0f,  0.0f},
                                                   {0.0f,  2.0f,  0.0f},
-                                                  {0.0f,  3.0f,  0.0f} };
+                                                  {0.0f,  3.0f,  -1.0f} };
     b.setControlPoints(bladeControlPoints);
-    for(int i = 0; i < 3; ++i)
-    {
-        EXPECT_EQ(b.getNormalVectors()[i], ngl::Vec3(/*???*/));
-    }
+    EXPECT_EQ(b.getNormalVectors()[0], ngl::Vec3(0.0f, 0.0f, -1.0f));
+    EXPECT_EQ(b.getNormalVectors()[1], ngl::Vec3(0.0f, 0.0f, -1.0f));
+    EXPECT_EQ(b.getNormalVectors()[2], ngl::Vec3(0.0f, -0.05/sqrt(0.005), -0.05/sqrt(0.005)));
 }

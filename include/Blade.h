@@ -9,6 +9,12 @@ class Blade
 public:
     Blade();
     static constexpr int controlPointsNum = 4;
+
+    // I'll probably have a different mechanism of defining grass blade width later.
+    // Potentially set those values together with control points.
+    static constexpr float baseSegmentWidth = 0.1f;
+    const static inline std::vector<float> segmentWidthCoefficient = {1.0f, 0.9f, 0.5f};
+
     [[nodiscard]] std::vector<ngl::Vec3> getControlPoints() const;
     bool setControlPoint(int _index, ngl::Vec3 _point);
     bool setControlPoints(std::vector<ngl::Vec3> _points);
