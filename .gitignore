@@ -2,3 +2,4 @@ build
 cmake-*
 *.~
 *.o
+bits-and-pieces

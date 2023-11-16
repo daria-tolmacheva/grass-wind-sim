@@ -10,12 +10,12 @@ Blade::Blade()
     // Normal vector is unit vector orthogonal to segment and surface vectors.
 }
 
-std::vector<Point> Blade::getControlPoints() const
+std::vector<ngl::Vec3> Blade::getControlPoints() const
 {
     return m_controlPoints;
 }
 
-bool Blade::setControlPoint(int _index, Point _point)
+bool Blade::setControlPoint(int _index, ngl::Vec3 _point)
 {
     if(_index < controlPointsNum)
     {
@@ -26,7 +26,7 @@ bool Blade::setControlPoint(int _index, Point _point)
         return false;
 }
 
-bool Blade::setControlPoints(std::vector<Point> _points)
+bool Blade::setControlPoints(std::vector<ngl::Vec3> _points)
 {
     if(_points.size() != controlPointsNum)
         return false;
@@ -47,17 +47,17 @@ bool Blade::setControlPoints(std::vector<Point> _points)
     return true;
 }
 
-std::vector<Point> Blade::getSegmentVectors() const
+std::vector<ngl::Vec3> Blade::getSegmentVectors() const
 {
     return m_segmentVector;
 }
 
-std::vector<Point> Blade::getSurfaceVectors() const
+std::vector<ngl::Vec3> Blade::getSurfaceVectors() const
 {
     return m_surfaceVector;
 }
 
-std::vector<Point> Blade::getNormalVectors() const
+std::vector<ngl::Vec3> Blade::getNormalVectors() const
 {
     return m_normalVector;
 }

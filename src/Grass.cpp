@@ -15,9 +15,9 @@ std::vector<Blade> Grass::getBlades() const
     return m_blades;
 }
 
-std::vector<Point> Grass::getControlPoints() const
+std::vector<ngl::Vec3> Grass::getControlPoints() const
 {
-    std::vector<Point> controlPoints;
+    std::vector<ngl::Vec3> controlPoints;
     for(auto blade : m_blades)
     {
         for(int i = 0; i < Blade::controlPointsNum; ++i)
@@ -26,13 +26,13 @@ std::vector<Point> Grass::getControlPoints() const
     return controlPoints;
 }
 
-bool Grass::setBlades(std::vector<Point> _controlPoints)
+bool Grass::setBlades(std::vector<ngl::Vec3> _controlPoints)
 {
     if((_controlPoints.size()/Blade::controlPointsNum) != m_blades.size())
         return false;
     for(int i = 0; i < m_blades.size(); ++i)
     {
-        std::vector<Point> bladeControlPoints(&_controlPoints[i * Blade::controlPointsNum],
+        std::vector<ngl::Vec3> bladeControlPoints(&_controlPoints[i * Blade::controlPointsNum],
                                               &_controlPoints[i * Blade::controlPointsNum + Blade::controlPointsNum]);
         if(!m_blades[i].setControlPoints(bladeControlPoints))
         {
@@ -42,7 +42,7 @@ bool Grass::setBlades(std::vector<Point> _controlPoints)
     return true;
 }
 
-bool Grass::setBlade(int _index, std::vector<Point> _controlPoints)
+bool Grass::setBlade(int _index, std::vector<ngl::Vec3> _controlPoints)
 {
     if(_index >= m_blades.size() || _controlPoints.size() != Blade::controlPointsNum)
         return false;

@@ -13,7 +13,10 @@ set(CMAKE_CXX_STANDARD 17)
 
 # Now we add our target executable and the file it is built from
 set(ExecutableName GrassSimulation)
+find_package(NGL CONFIG REQUIRED)
 add_executable(${ExecutableName})
+# Add NGL include path
+include_directories(include $ENV{HOME}/NGL/include)
 target_include_directories(${ExecutableName} PRIVATE include)
 target_sources(${ExecutableName} PRIVATE
         src/main.cpp
@@ -24,9 +27,12 @@ target_sources(${ExecutableName} PRIVATE
 
 # Testing code
 find_package(GTest CONFIG REQUIRED)
+find_package(NGL CONFIG REQUIRED)
 include(GoogleTest)
 set(TestName GrassSimulationTests)
 add_executable(${TestName})
+# Add NGL include path
+include_directories(include $ENV{HOME}/NGL/include)
 target_include_directories(${TestName} PRIVATE include)
 target_sources(${TestName} PRIVATE
         tests/GrassTests.cpp
