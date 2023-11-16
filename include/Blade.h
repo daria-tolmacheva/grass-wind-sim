@@ -25,6 +25,11 @@ struct Point
                FCompare(y, _p.y)  &&
                FCompare(z, _p.z));
     }
+
+    Point operator-(const Point &_rhs) const
+    {
+        return {x - _rhs.x, y - _rhs.y, z - _rhs.z};
+    }
 };
 
 class Blade
@@ -35,8 +40,15 @@ public:
     [[nodiscard]] std::vector<Point> getControlPoints() const;
     bool setControlPoint(int _index, Point _point);
     bool setControlPoints(std::vector<Point> _points);
+    [[nodiscard]] std::vector<Point> getSegmentVectors() const;
+    [[nodiscard]] std::vector<Point> getSurfaceVectors() const;
+    [[nodiscard]] std::vector<Point> getNormalVectors() const;
 private:
     std::vector<Point> m_controlPoints;
+    // For each of 3 blade segments we need to store 3 types of vectors to describe its orientation
+    std::vector<Point> m_segmentVector; // Vector connecting 2 adjacent control points
+    std::vector<Point> m_surfaceVector; // Orthogonal to segment vector and on the blade plane
+    std::vector<Point> m_normalVector; // Unit vector orthogonal to both segment and surface vectors
 };
 
 #endif

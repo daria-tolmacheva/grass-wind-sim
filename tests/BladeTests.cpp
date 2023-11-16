@@ -35,3 +35,46 @@ TEST(Blade, setControlPoints)
     // Fails if less/more than 4 control points
     EXPECT_FALSE(b.setControlPoints({Point(0.0f, 0.0f, 0.0f)}));
 }
+
+TEST(Blade, segmentVector)
+{
+    Blade b;
+    std::vector<Point> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
+                                              {0.0f,  1.0f,  0.0f},
+                                              {0.0f,  2.0f,  0.0f},
+                                              {0.0f,  3.0f,  0.0f} };
+    b.setControlPoints(bladeControlPoints);
+    for(int i = 0; i < 3; ++i)
+    {
+        EXPECT_EQ(b.getSegmentVectors()[i], Point(0.0f, 1.0f, 0.0f));
+    }
+
+}
+
+TEST(Blade, surfaceVector)
+{
+    Blade b;
+    std::vector<Point> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
+                                              {0.0f,  1.0f,  0.0f},
+                                              {0.0f,  2.0f,  0.0f},
+                                              {0.0f,  3.0f,  0.0f} };
+    b.setControlPoints(bladeControlPoints);
+    for(int i = 0; i < 3; ++i)
+    {
+        EXPECT_EQ(b.getSurfaceVectors()[i], Point(/*???*/));
+    }
+}
+
+TEST(Blade, normalVector)
+{
+    Blade b;
+    std::vector<Point> bladeControlPoints = { {0.0f,  0.0f,  0.0f},
+                                              {0.0f,  1.0f,  0.0f},
+                                              {0.0f,  2.0f,  0.0f},
+                                              {0.0f,  3.0f,  0.0f} };
+    b.setControlPoints(bladeControlPoints);
+    for(int i = 0; i < 3; ++i)
+    {
+        EXPECT_EQ(b.getNormalVectors()[i], Point(/*???*/));
+    }
+}
