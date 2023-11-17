@@ -35,6 +35,16 @@ Stretch goals:
 ## Grass Representation
 
 Each grass blade is represented by the 4 control points of a Bezier curve, and each grass plant consists of multiple grass blades starting in the same point.
-The Blade class represents a single grass blade and hold information relevant to the Bezier curve which represents it as well as any other information relevant to the deformation calculation of it (e.i. orientation vectors of blade segments).
+The `Blade` class represents a single grass blade and hold information relevant to the Bezier curve which represents it as well as any other information relevant to the deformation calculation of it (e.i. orientation vectors of blade segments).
 
-The Grass class needs to include a vector of Blade instances to hold the information about all of the grass in the scene(or part of the scene of LOD techniques would be implemented).
+The `Grass` class needs to include a vector of `Blade` instances to hold the information about all of the grass in the scene(or part of the scene of LOD techniques would be implemented).
+
+The vectors stored in the `Blade` that describe each of the 3 segments of the blade each are:
+- `m_segmentVector`, which connects 2 adjescent control points and describes direction of the segment;
+- `m_surfaceVector`, which is perpendicular to the segment vector and describes the direction and size of the surface of a half of the grass blade (second half being mirrored) as shown below;
+- `m_normal_vector`, which is a unit vector orthogonal to the other two and describes the bend direction used for calculation of bending of the grass blade.
+
+![](images/blade_segments_diagram.jpg)
+![](images/blade_vectors_diagram.jpg)
+![](images/surface_vector_diagram.JPG)
+![](images/normal_vector_diagram.jpg)
