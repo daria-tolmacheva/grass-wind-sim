@@ -21,8 +21,27 @@ Didn't have much time this week
 
 ## Week 4 
 
+BFX week
+
+## Week 5
+
 TBD
 
 1. Add grass blade attributes description to `README.md`.
-2. Basic OpenGL visualisation?
-3. Basic Qt app to host OpenGL vis??
+2. Basic OpenGL visualisation(?)
+3. Basic Qt app to host OpenGL vis(?)
+
+## Week 6
+
+TBD
+1. Wind simulation on CPU
+
+## Week 7
+
+TBD
+1. Update the visualisation to include shaders
+
+## Week 8
+
+TBD
+1. Refactor the fluid simulation to be calculated on GPU
