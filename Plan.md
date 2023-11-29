@@ -25,11 +25,9 @@ BFX week
 
 ## Week 5
 
-TBD
-
 1. Add grass blade attributes description to `README.md`.
-2. Basic OpenGL visualisation(?)
-3. Basic Qt app to host OpenGL vis(?)
+2. Basic OpenGL visualisation - just to add the skeleton of the visualisation code in. This will later be edited to use shaders to draw grass geometry directly from control points (and oriantation vectors) without using NGL bezier curves. 
+3. Basic Qt app to host OpenGL visualisation. Will change mouse/keyboard controls and add more control to the user.
 
 ## Week 6
 
@@ -39,7 +37,7 @@ TBD
 ## Week 7
 
 TBD
-1. Update the visualisation to include shaders
+1. Update the visualisation to include shaders and update with simulation.
 
 ## Week 8
 

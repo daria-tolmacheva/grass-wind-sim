@@ -14,6 +14,17 @@ set(CMAKE_CXX_STANDARD 17)
 # Now we add our target executable and the file it is built from
 set(ExecutableName GrassSimulation)
 find_package(NGL CONFIG REQUIRED)
+# Instruct CMake to run moc automatically when needed (Qt projects only)
+set(CMAKE_AUTOMOC ON)
+# find Qt libs first we check for Version 6
+find_package(Qt6 COMPONENTS OpenGL Widgets QUIET )
+if ( Qt6_FOUND )
+  message("Found Qt6 Using that")
+else()
+  message("Found Qt5 Using that")
+  find_package(Qt5 COMPONENTS OpenGL Widgets REQUIRED)
+endif()
+
 add_executable(${ExecutableName})
 # Add NGL include path
 include_directories(include $ENV{HOME}/NGL/include)
@@ -23,7 +34,11 @@ target_sources(${ExecutableName} PRIVATE
         ${PROJECT_SOURCE_DIR}/src/Grass.cpp
         ${PROJECT_SOURCE_DIR}/src/Blade.cpp
         ${PROJECT_SOURCE_DIR}/include/Grass.h
-        ${PROJECT_SOURCE_DIR}/include/Blade.h )
+        ${PROJECT_SOURCE_DIR}/include/Blade.h
+        ${PROJECT_SOURCE_DIR}/src/NGLScene.cpp
+        ${PROJECT_SOURCE_DIR}/include/NGLScene.h )
+# now add NGL specific values
+target_link_libraries(${ExecutableName} PRIVATE  NGL Qt::Widgets Qt::OpenGL)
 
 # Testing code
 find_package(GTest CONFIG REQUIRED)
