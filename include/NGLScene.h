@@ -5,6 +5,9 @@
 #include "WindowParams.h"
 #include <QOpenGLWindow>
 #include <memory>
+
+#include "Grass.h"
+
 //----------------------------------------------------------------------------------------------------------------------
 /// This file is edited from the NGL Curve Demo file Jon Macey:
 /// https://github.com/NCCA/CurveDemos/blob/main/CurveDemo/include/NGLScene.h
@@ -67,9 +70,9 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     ngl::Mat4 m_mouseGlobalTX;
     //----------------------------------------------------------------------------------------------------------------------
-    /// @brief the vector of curves to use - edited by me
+    /// @brief grass object to use - edited by me
     //----------------------------------------------------------------------------------------------------------------------
-    std::vector<std::unique_ptr<ngl::BezierCurve>>m_curves;
+    Grass m_grass;
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief method to load transform matrices to the shader
     //----------------------------------------------------------------------------------------------------------------------

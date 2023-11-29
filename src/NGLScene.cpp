@@ -7,15 +7,13 @@
 #include <ngl/ShaderLib.h>
 #include <iostream>
 
-#include "Grass.h"
-
 /// This file is edited from the NGL Curve Demo file by Jon Macey:
 /// https://github.com/NCCA/CurveDemos/blob/main/CurveDemo/src/NGLScene.cpp
 /// commit 20351cf
 
-NGLScene::NGLScene()
+NGLScene::NGLScene() : m_grass(4)
 {
-  setTitle("Using ngl::BezierCurve");
+  setTitle("Grass Simulation");
 }
 
 NGLScene::~NGLScene()
@@ -56,7 +54,7 @@ void NGLScene::initializeGL()
   ngl::ShaderLib::use(ngl::nglColourShader);
   ngl::ShaderLib::setUniform("Colour", 1.0f, 1.0f, 1.0f, 1.0f);
 
-
+  // Edited by me
   std::vector<ngl::Vec3> plantControlPoints = { {0.0f,   0.0f,   0.0f}, // first blade
                                                 {0.0f,   7.0f,   1.0f},
                                                 {0.0f,   9.0f,   4.0f},
@@ -74,18 +72,8 @@ void NGLScene::initializeGL()
                                                 {-12.5f, 3.5f,   0.0f},
                                                 {-16.0f, 1.5f,   0.0f} };
 
-  m_curves.resize(plantControlPoints.size() * 0.25);
-  for (size_t i = 0; i < m_curves.size(); ++i)
-  {
-    m_curves[i] = std::make_unique<ngl::BezierCurve>();
-    m_curves[i]->addPoint(plantControlPoints[i*4]);
-    m_curves[i]->addPoint(plantControlPoints[i*4 + 1]);
-    m_curves[i]->addPoint(plantControlPoints[i*4 + 2]);
-    m_curves[i]->addPoint(plantControlPoints[i*4 + 3]);
-    m_curves[i]->setLOD(200.0f);
-    m_curves[i]->createKnots();
-    m_curves[i]->createVAO();
-  }
+  m_grass.setBlades(plantControlPoints);
+  // end of edit
 }
 
 void NGLScene::loadMatricesToShader()
@@ -112,27 +100,9 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
   loadMatricesToShader();
-
-  ngl::ShaderLib::use("nglColourShader");
-  ngl::ShaderLib::setUniform("Colour", 1.0f, 1.0f, 1.0f, 1.0f);
-  for (auto & curve : m_curves)
-  {
-    curve->draw();
-  }
-  glPointSize(4);
-  ngl::ShaderLib::setUniform("Colour", 0.0f, 1.0f, 0.0f, 1.0f);
-
-  for (auto & curve : m_curves)
-  {
-    curve->drawControlPoints();
-  }
-  glPointSize(1);
-  ngl::ShaderLib::setUniform("Colour", 1.0f, 0.0f, 0.0f, 1.0f);
-
-  for (auto & curve : m_curves)
-  {
-    curve->drawHull();
-  }
+  // Edited by me
+  m_grass.draw();
+  // end of edit
 }
 
 //----------------------------------------------------------------------------------------------------------------------

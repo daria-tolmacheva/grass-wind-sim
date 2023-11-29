@@ -14,6 +14,7 @@ public:
     std::vector<ngl::Vec3> getControlPoints() const;
     bool setBlades(std::vector<ngl::Vec3> _controlPoints);
     bool setBlade(int _index, std::vector<ngl::Vec3> _controlPoints);
+    void draw() const;
 
 private:
     std::vector<Blade> m_blades;

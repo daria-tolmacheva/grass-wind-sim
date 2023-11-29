@@ -21,6 +21,8 @@ public:
     [[nodiscard]] std::vector<ngl::Vec3> getSegmentVectors() const;
     [[nodiscard]] std::vector<ngl::Vec3> getSurfaceVectors() const;
     [[nodiscard]] std::vector<ngl::Vec3> getNormalVectors() const;
+    void draw() const;
+
 private:
     std::vector<ngl::Vec3> m_controlPoints;
     // For each of 3 blade segments we need to store 3 types of vectors to describe its orientation

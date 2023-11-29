@@ -48,3 +48,12 @@ bool Grass::setBlade(int _index, std::vector<ngl::Vec3> _controlPoints)
         return false;
     return m_blades[_index].setControlPoints(_controlPoints);
 }
+
+void Grass::draw() const
+{
+  for(auto blade : m_blades)
+  {
+    blade.draw();
+  }
+}
+
