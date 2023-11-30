@@ -19,11 +19,11 @@ add_executable(${ExecutableName})
 include_directories(include $ENV{HOME}/NGL/include)
 target_include_directories(${ExecutableName} PRIVATE include)
 target_sources(${ExecutableName} PRIVATE
-        src/main.cpp
-        src/Grass.cpp
-        src/Blade.cpp
-        include/Grass.h
-        include/Blade.h )
+        ${PROJECT_SOURCE_DIR}/src/main.cpp
+        ${PROJECT_SOURCE_DIR}/src/Grass.cpp
+        ${PROJECT_SOURCE_DIR}/src/Blade.cpp
+        ${PROJECT_SOURCE_DIR}/include/Grass.h
+        ${PROJECT_SOURCE_DIR}/include/Blade.h )
 
 # Testing code
 find_package(GTest CONFIG REQUIRED)
@@ -35,11 +35,11 @@ add_executable(${TestName})
 include_directories(include $ENV{HOME}/NGL/include)
 target_include_directories(${TestName} PRIVATE include)
 target_sources(${TestName} PRIVATE
-        tests/GrassTests.cpp
-        tests/BladeTests.cpp
-        src/Grass.cpp
-        src/Blade.cpp
-        include/Grass.h
-        include/Blade.h )
+        ${PROJECT_SOURCE_DIR}/tests/GrassTests.cpp
+        ${PROJECT_SOURCE_DIR}/tests/BladeTests.cpp
+        ${PROJECT_SOURCE_DIR}/src/Grass.cpp
+        ${PROJECT_SOURCE_DIR}/src/Blade.cpp
+        ${PROJECT_SOURCE_DIR}/include/Grass.h
+        ${PROJECT_SOURCE_DIR}/include/Blade.h )
 target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main)
 gtest_discover_tests(${TestName})
