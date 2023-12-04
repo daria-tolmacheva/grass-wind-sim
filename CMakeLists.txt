@@ -8,9 +8,6 @@ endif()
 # Name of the project, it is best to use something different from the exe name
 project(GrassSimulation_build)
 
-# Here we set the C++ standard to use
-set(CMAKE_CXX_STANDARD 17)
-
 # Now we add our target executable and the file it is built from
 set(ExecutableName GrassSimulation)
 find_package(NGL CONFIG REQUIRED)
@@ -25,6 +22,11 @@ else()
   find_package(Qt5 COMPONENTS OpenGL Widgets REQUIRED)
 endif()
 
+# Here we set the C++ standard to use
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+
 add_executable(${ExecutableName})
 # Add NGL include path
 include_directories(include $ENV{HOME}/NGL/include)
@@ -36,7 +38,9 @@ target_sources(${ExecutableName} PRIVATE
         ${PROJECT_SOURCE_DIR}/include/Grass.h
         ${PROJECT_SOURCE_DIR}/include/Blade.h
         ${PROJECT_SOURCE_DIR}/src/NGLScene.cpp
-        ${PROJECT_SOURCE_DIR}/include/NGLScene.h )
+        ${PROJECT_SOURCE_DIR}/include/NGLScene.h
+        ${PROJECT_SOURCE_DIR}/src/NGLSceneMouseControls.cpp
+)
 # now add NGL specific values
 target_link_libraries(${ExecutableName} PRIVATE  NGL Qt::Widgets Qt::OpenGL)
 

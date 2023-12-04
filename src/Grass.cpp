@@ -49,11 +49,11 @@ bool Grass::setBlade(int _index, std::vector<ngl::Vec3> _controlPoints)
     return m_blades[_index].setControlPoints(_controlPoints);
 }
 
-void Grass::draw() const
+void Grass::draw(ngl::Mat4 MVP) const
 {
   for(auto blade : m_blades)
   {
-    blade.draw();
+    blade.draw(MVP);
   }
 }
 

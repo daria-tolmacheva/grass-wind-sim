@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <ngl/Vec3.h>
+#include <ngl/Mat4.h>
 #include "Blade.h"
 
 class Grass
@@ -14,7 +15,7 @@ public:
     std::vector<ngl::Vec3> getControlPoints() const;
     bool setBlades(std::vector<ngl::Vec3> _controlPoints);
     bool setBlade(int _index, std::vector<ngl::Vec3> _controlPoints);
-    void draw() const;
+    void draw(ngl::Mat4 MVP) const;
 
 private:
     std::vector<Blade> m_blades;

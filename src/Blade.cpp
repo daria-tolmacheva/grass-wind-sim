@@ -71,7 +71,7 @@ std::vector<ngl::Vec3> Blade::getNormalVectors() const
     return m_normalVector;
 }
 
-void Blade::draw() const
+void Blade::draw(ngl::Mat4 MVP) const
 {
   std::unique_ptr<ngl::BezierCurve> curve = std::make_unique<ngl::BezierCurve>();
   for(auto controlPoint : m_controlPoints)
@@ -83,11 +83,14 @@ void Blade::draw() const
   curve->createVAO();
   ngl::ShaderLib::use("nglColourShader");
   ngl::ShaderLib::setUniform("Colour", 1.0f, 1.0f, 1.0f, 1.0f);
+  ngl::ShaderLib::setUniform("MVP", MVP);
   curve->draw();
   glPointSize(4);
   ngl::ShaderLib::setUniform("Colour", 0.0f, 1.0f, 0.0f, 1.0f);
+  ngl::ShaderLib::setUniform("MVP", MVP);
   curve->drawControlPoints();
   glPointSize(1);
   ngl::ShaderLib::setUniform("Colour", 1.0f, 0.0f, 0.0f, 1.0f);
+  ngl::ShaderLib::setUniform("MVP", MVP);
   curve->drawHull();
 }
