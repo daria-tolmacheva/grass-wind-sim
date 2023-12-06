@@ -1,3 +1,7 @@
+/// This file is edited from the NGL GeometryShaders Demo by Jon Macey:
+/// https://github.com/NCCA/GeometryShaders/blob/main/Curves/shaders/curveGeometry.glsl
+/// commit d7fec75
+
 #version 410 core
 layout(lines_adjacency) in;
 layout(line_strip, max_vertices = 128) out;
