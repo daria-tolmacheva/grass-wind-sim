@@ -62,3 +62,10 @@ target_sources(${TestName} PRIVATE
         ${PROJECT_SOURCE_DIR}/include/Blade.h )
 target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main)
 gtest_discover_tests(${TestName})
+
+# Shaders
+add_custom_target(${ExecutableName}CopyShaders ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+        $<TARGET_FILE_DIR:${ExecutableName}>/shaders
+)

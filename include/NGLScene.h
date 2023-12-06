@@ -106,7 +106,10 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
-
+    void loadMatricesToColourShader(const ngl::Vec4 &_colour);
+    std::array<GLuint,2>m_subroutines;
+    size_t m_activeSubroutine=0;
+    float m_steps=0.1f;
 };
 
 

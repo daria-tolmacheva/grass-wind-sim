@@ -1,3 +1,6 @@
+#include <ngl/VAOFactory.h>
+#include <ngl/SimpleIndexVAO.h>
+#include <iostream>
 #include "Grass.h"
 
 Grass::Grass(int _bladesNum)
@@ -39,6 +42,7 @@ bool Grass::setBlades(std::vector<ngl::Vec3> _controlPoints)
             return false;
         }
     }
+    m_vao = ngl::VAOFactory::createVAO(ngl::simpleIndexVAO, GL_LINE_STRIP_ADJACENCY);
     return true;
 }
 
@@ -49,11 +53,45 @@ bool Grass::setBlade(int _index, std::vector<ngl::Vec3> _controlPoints)
     return m_blades[_index].setControlPoints(_controlPoints);
 }
 
-void Grass::draw(ngl::Mat4 MVP) const
+void Grass::draw() const
 {
-  for(auto blade : m_blades)
-  {
-    blade.draw(MVP);
-  }
+  m_vao->bind();
+  m_vao->setMode(GL_LINE_STRIP_ADJACENCY);
+  m_vao->draw();
+  m_vao->unbind();
 }
 
+void Grass::createVAO()
+{
+    std::vector<ngl::Vec3> controlPoints = getControlPoints();
+    constexpr GLshort restart = 9999;
+    size_t j = 0;
+    std::vector<GLshort> index(controlPoints.size()/4 * 5 - 1);
+    for(size_t i = 0; i < index.size() - 3; i = i + 5) // this loop looks horrible but it works
+    {                                                  // might refactor later to make it readable
+        index[i] = j * 4;
+        index[i + 1] = j * 4 + 1;
+        index[i + 2] = j * 4 + 2;
+        index[i + 3] = j * 4 + 3;
+        if (i != index.size() - 4) {
+          index[i + 4] = restart;
+        }
+        ++j;
+    }
+
+    m_vao->bind();
+    m_vao->setData(ngl::SimpleIndexVAO::VertexData(
+              controlPoints.size() * sizeof(ngl::Vec3),
+              controlPoints[0].m_x,
+              index.size(), &index[0],
+              GL_UNSIGNED_SHORT));
+    // data is 24 bytes apart ( two Vec3's) first index
+    // is 0 second is 3 floats into the data set (i.e. vec3 offset)
+    m_vao->setVertexAttributePointer(0, 3, GL_FLOAT, 0, 0);
+    m_vao->setNumIndices(index.size());
+    glEnable(GL_PRIMITIVE_RESTART);
+    glPrimitiveRestartIndex(restart);
+
+    // now unbind
+    m_vao->unbind();
+}

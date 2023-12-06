@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <ngl/Vec3.h>
-#include <ngl/Mat4.h>
+#include <ngl/AbstractVAO.h>
 #include "Blade.h"
 
 class Grass
@@ -15,10 +15,12 @@ public:
     std::vector<ngl::Vec3> getControlPoints() const;
     bool setBlades(std::vector<ngl::Vec3> _controlPoints);
     bool setBlade(int _index, std::vector<ngl::Vec3> _controlPoints);
-    void draw(ngl::Mat4 MVP) const;
+    void draw() const;
+    void createVAO();
 
 private:
     std::vector<Blade> m_blades;
+    std::unique_ptr<ngl::AbstractVAO> m_vao;
 };
 
 #endif

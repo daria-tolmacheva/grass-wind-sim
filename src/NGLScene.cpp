@@ -43,17 +43,24 @@ void NGLScene::initializeGL()
   // Now we will create a basic Camera from the graphics library
   // This is a static camera so it only needs to be set once
   // First create Values for the camera position
-  ngl::Vec3 from(-25.0f, 15.0f, -25.0f);
+  ngl::Vec3 from(-25.0f, 15.0f, -25.0f); // edited by me
   ngl::Vec3 to(0.0f, 5.0f, 0.0f);
   ngl::Vec3 up(0.0f, 1.0f, 0.0f);
   m_view = ngl::lookAt(from, to, up);
   // set the shape using FOV 45 Aspect Ratio based on Width and Height
   // The final two are near and far clipping planes of 0.5 and 10
 
-  ngl::ShaderLib::use(ngl::nglColourShader);
-  ngl::ShaderLib::setUniform("Colour", 1.0f, 1.0f, 1.0f, 1.0f);
-
   // Edited by me
+  // grab an instance of shader manager
+  ngl::ShaderLib::loadShader("CurveShader", "shaders/grassVertex.glsl",
+                             "shaders/grassFragment.glsl",
+                             "shaders/grassGeometry.glsl");
+  ngl::ShaderLib::use("CurveShader");
+  ngl::ShaderLib::setUniform("steps", 0.01f);
+  GLuint id = ngl::ShaderLib::getProgramID("CurveShader");
+  m_subroutines[0] = glGetSubroutineIndex(id, GL_GEOMETRY_SHADER, "bezier");
+  m_subroutines[1] = glGetSubroutineIndex(id, GL_GEOMETRY_SHADER, "lerpCurve");
+
   std::vector<ngl::Vec3> plantControlPoints = { {0.0f,   0.0f,   0.0f}, // first blade
                                                 {0.0f,   7.0f,   1.0f},
                                                 {0.0f,   9.0f,   4.0f},
@@ -72,17 +79,24 @@ void NGLScene::initializeGL()
                                                 {-16.0f, 1.5f,   0.0f} };
 
   m_grass.setBlades(plantControlPoints);
+  m_grass.createVAO();
+  glEnable(GL_DEPTH_TEST);
 
   ngl::VAOPrimitives::createLineGrid("floor", 40, 40, 10);
-  // end of edit
+// end of edit
 }
 
 void NGLScene::loadMatricesToShader()
 {
+  ngl::ShaderLib::use("CurveShader");
+  ngl::ShaderLib::setUniform("MVP", m_project * m_view * m_mouseGlobalTX);
+  glUniformSubroutinesuiv(GL_GEOMETRY_SHADER, 1, &m_subroutines[m_activeSubroutine]);
+  ngl::ShaderLib::setUniform("steps", m_steps);
+}
+void NGLScene::loadMatricesToColourShader(const ngl::Vec4 &_colour) {
   ngl::ShaderLib::use(ngl::nglColourShader);
-  ngl::Mat4 MVP;
-  MVP = m_project * m_view * m_mouseGlobalTX;
-  ngl::ShaderLib::setUniform("MVP", MVP);
+  ngl::ShaderLib::setUniform("Colour", _colour);
+  ngl::ShaderLib::setUniform("MVP", m_project * m_view * m_mouseGlobalTX);
 }
 
 /// This function is edited by me
@@ -100,9 +114,14 @@ void NGLScene::paintGL()
   m_mouseGlobalTX.m_m[3][0] = m_modelPos.m_x;
   m_mouseGlobalTX.m_m[3][1] = m_modelPos.m_y;
   m_mouseGlobalTX.m_m[3][2] = m_modelPos.m_z;
-  // Edited by me
-  m_grass.draw(m_project * m_view * m_mouseGlobalTX);
 
+  // Edited by me
+  // Draw grass
+  loadMatricesToShader();
+  m_grass.draw();
+
+  // Draw ground grid
+  // loadMatricesToColourShader(ngl::Vec4(0.6f, 0.29f, 0.0f, 1.0f)); <- doesn't pass the colour for some reason(?)
   ngl::ShaderLib::use(ngl::nglColourShader);
   ngl::ShaderLib::setUniform("Colour", 0.6f, 0.29f, 0.0f, 1.0f);
   ngl::ShaderLib::setUniform("MVP", m_project * m_view * m_mouseGlobalTX);
