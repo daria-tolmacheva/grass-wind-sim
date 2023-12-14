@@ -85,8 +85,6 @@ void Grass::createVAO()
               controlPoints[0].m_x,
               index.size(), &index[0],
               GL_UNSIGNED_SHORT));
-    // data is 24 bytes apart ( two Vec3's) first index
-    // is 0 second is 3 floats into the data set (i.e. vec3 offset)
     m_vao->setVertexAttributePointer(0, 3, GL_FLOAT, 0, 0);
     m_vao->setNumIndices(index.size());
     glEnable(GL_PRIMITIVE_RESTART);

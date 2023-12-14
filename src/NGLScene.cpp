@@ -51,6 +51,12 @@ void NGLScene::initializeGL()
     // The final two are near and far clipping planes of 0.5 and 10
 
     // Edited by me
+    // grab an instance of shader manager
+//    ngl::ShaderLib::loadShader("CurveShader", "shaders/grassVertex.glsl",
+//                               "shaders/grassFragment.glsl",
+//                               "shaders/grassGeometry.glsl");
+//    ngl::ShaderLib::use("CurveShader");
+
     ngl::ShaderLib::createShaderProgram("GrassShader");
 
     // now we are going to create empty shaders for Frag and Vert
