@@ -22,8 +22,10 @@ target_sources(${ExecutableName} PRIVATE
         ${PROJECT_SOURCE_DIR}/src/main.cpp
         ${PROJECT_SOURCE_DIR}/src/Grass.cpp
         ${PROJECT_SOURCE_DIR}/src/Blade.cpp
+        ${PROJECT_SOURCE_DIR}/src/Simulation.cpp
         ${PROJECT_SOURCE_DIR}/include/Grass.h
-        ${PROJECT_SOURCE_DIR}/include/Blade.h )
+        ${PROJECT_SOURCE_DIR}/include/Blade.h
+        ${PROJECT_SOURCE_DIR}/include/Simulation.h)
 
 # Testing code
 find_package(GTest CONFIG REQUIRED)
@@ -37,9 +39,12 @@ target_include_directories(${TestName} PRIVATE include)
 target_sources(${TestName} PRIVATE
         ${PROJECT_SOURCE_DIR}/tests/GrassTests.cpp
         ${PROJECT_SOURCE_DIR}/tests/BladeTests.cpp
+        ${PROJECT_SOURCE_DIR}/tests/SimulationTests.cpp
         ${PROJECT_SOURCE_DIR}/src/Grass.cpp
         ${PROJECT_SOURCE_DIR}/src/Blade.cpp
+        ${PROJECT_SOURCE_DIR}/src/Simulation.cpp
         ${PROJECT_SOURCE_DIR}/include/Grass.h
-        ${PROJECT_SOURCE_DIR}/include/Blade.h )
+        ${PROJECT_SOURCE_DIR}/include/Blade.h
+        ${PROJECT_SOURCE_DIR}/include/Simulation.h )
 target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main)
 gtest_discover_tests(${TestName})
