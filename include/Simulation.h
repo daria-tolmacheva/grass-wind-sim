@@ -38,6 +38,7 @@ public:
 
     void simulate(float _dt, int _numIter);
     void setVelocity(float _value, Plane _entryPlane);
+    float sampleField(int _i, int _j, int _k, Field _field);
 
 private:
     static constexpr float gravity = 9.8;
@@ -62,7 +63,6 @@ private:
     [[nodiscard]] float avgVelocityX(int _i, int _j, int _k) const;
     [[nodiscard]] float avgVelocityY(int _i, int _j, int _k) const;
     [[nodiscard]] float avgVelocityZ(int _i, int _j, int _k) const;
-    float sampleField(int _i, int _j, int _k, Field _field);
     void advectVelocity(float _dt);
 };
 
