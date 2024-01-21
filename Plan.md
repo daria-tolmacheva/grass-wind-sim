@@ -25,23 +25,41 @@ BFX week
 
 ## Week 5
 
-TBD
-
 1. Add grass blade attributes description to `README.md`.
-2. Basic OpenGL visualisation(?)
-3. Basic Qt app to host OpenGL vis(?)
+2. Basic OpenGL visualisation - just to add the skeleton of the visualisation code in. This will later be edited to use shaders to draw grass geometry directly from control points (and oriantation vectors) without using NGL bezier curves. 
+3. Basic Qt app to host OpenGL visualisation. Will change mouse/keyboard controls and add more control to the user.
 
 ## Week 6
 
-TBD
-1. Wind simulation on CPU
+1. Fix camera controls a bit.
+2. Update the visualisation to include custom shaders rather then use ngl::Curve.
+3. Implement tessellation/geometry shaders(?)
 
 ## Week 7
 
 TBD
-1. Update the visualisation to include shaders
+1. Implement tessellation/geometry shaders(?)
+2. Refactor `Grass`/`Blade` to better fit shader needs(?)
+3. Add WindActor class + tests.
 
-## Week 8
+## Week 8 (during Christmas)
 
 TBD
-1. Refactor the fluid simulation to be calculated on GPU
+1. Wind simulation on CPU.
+2. Refactor the fluid simulation to be calculated on GPU.
+3. Clean up documentation: update `README.md` and `Design.md`
+
+## Week 9
+
+TBD
+
+1. Simulation user controls.
+2. Update camera controls to fit my needs.
+3. Reading/writing files for demos.
+
+## Week 10
+
+TBD
+1. Design demos.
+2. Cleaning up.
+3. Finishing up anything that still needs to be done.

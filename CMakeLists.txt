@@ -8,12 +8,25 @@ endif()
 # Name of the project, it is best to use something different from the exe name
 project(GrassSimulation_build)
 
-# Here we set the C++ standard to use
-set(CMAKE_CXX_STANDARD 17)
-
 # Now we add our target executable and the file it is built from
 set(ExecutableName GrassSimulation)
 find_package(NGL CONFIG REQUIRED)
+# Instruct CMake to run moc automatically when needed (Qt projects only)
+set(CMAKE_AUTOMOC ON)
+# find Qt libs first we check for Version 6
+find_package(Qt6 COMPONENTS OpenGL Widgets QUIET )
+if ( Qt6_FOUND )
+  message("Found Qt6 Using that")
+else()
+  message("Found Qt5 Using that")
+  find_package(Qt5 COMPONENTS OpenGL Widgets REQUIRED)
+endif()
+
+# Here we set the C++ standard to use
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS ON)
+
 add_executable(${ExecutableName})
 # Add NGL include path
 include_directories(include $ENV{HOME}/NGL/include)
@@ -25,7 +38,13 @@ target_sources(${ExecutableName} PRIVATE
         ${PROJECT_SOURCE_DIR}/src/Simulation.cpp
         ${PROJECT_SOURCE_DIR}/include/Grass.h
         ${PROJECT_SOURCE_DIR}/include/Blade.h
-        ${PROJECT_SOURCE_DIR}/include/Simulation.h)
+        ${PROJECT_SOURCE_DIR}/include/Simulation.h
+        ${PROJECT_SOURCE_DIR}/src/NGLScene.cpp
+        ${PROJECT_SOURCE_DIR}/include/NGLScene.h
+        ${PROJECT_SOURCE_DIR}/src/NGLSceneMouseControls.cpp
+)
+# now add NGL specific values
+target_link_libraries(${ExecutableName} PRIVATE  NGL Qt::Widgets Qt::OpenGL)
 
 # Testing code
 find_package(GTest CONFIG REQUIRED)
@@ -48,3 +67,10 @@ target_sources(${TestName} PRIVATE
         ${PROJECT_SOURCE_DIR}/include/Simulation.h )
 target_link_libraries(${TestName} PRIVATE GTest::gtest GTest::gtest_main)
 gtest_discover_tests(${TestName})
+
+# Shaders
+add_custom_target(${ExecutableName}CopyShaders ALL
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_CURRENT_SOURCE_DIR}/shaders
+        $<TARGET_FILE_DIR:${ExecutableName}>/shaders
+)

@@ -1,3 +1,5 @@
+#include <ngl/BezierCurve.h>
+#include <ngl/ShaderLib.h>
 #include <ngl/Quaternion.h>
 
 #include "Blade.h"
