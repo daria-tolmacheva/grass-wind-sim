@@ -135,98 +135,107 @@ void Blade::update(Simulation sim, float _dt)
 
     }
 
-//    // Bending calculated separately
-//
-//    std::vector<int> upEdges;
-//    std::vector<int> downEdges;
-//    for (int i = 0; i < controlPointsNum-1; ++i)
-//    {
-//        if (m_segmentVector[i].m_y > 1)
-//        {
-//            upEdges.push_back(i);
-//        }
-//        else
-//        {
-//            downEdges.push_back(i);
-//        }
-//    }
-//
-//    if( downEdges.empty() || upEdges.empty() )
-//    {
-//        // Bend vectors - static and current
-//        ngl::Vec3 bendVecStatic = m_segmentOrig[4] - m_segmentOrig[0];
-//        ngl::Vec3 bendVecCurrent = m_segmentVector[4] - m_segmentVector[0];
-//        ngl::Vec3 bendVecDiff = bendVecStatic - bendVecCurrent;
-//
-//        // For each segment find the total force on it
-//        for (int i = 0; i < controlPointsNum-1; ++i)
-//        {
-//            //   - Wind force - same as at the tip of the grass blade
-//            m_totalForce[i] +=
-//                    m_windCoof * vWind.dot(m_normalVector[i]) * m_normalVector[i];
-//
-//            //   - Restoration force
-//            m_totalForce[i] += m_stiffness[3]/m_stiffness[i] * m_angularVelocity[i] * _dt * (bendVecDiff/bendVecDiff.length());
-//        }
-//    }
-//    else
-//    {
-//        // Process down edges
-//        // Wind velocity at local tip (up edges)
-//        int localTipIndexDown = downEdges[downEdges.size() - 1];
-//        ngl::Vec3 vWindDown = ngl::Vec3(
-//                sim.sampleField(m_controlPoints[localTipIndexDown].m_x, m_controlPoints[localTipIndexDown].m_y,
-//                                m_controlPoints[localTipIndexDown].m_z, X_FIELD),
-//                sim.sampleField(m_controlPoints[localTipIndexDown].m_x, m_controlPoints[localTipIndexDown].m_y,
-//                                m_controlPoints[localTipIndexDown].m_z, Y_FIELD),
-//                sim.sampleField(m_controlPoints[localTipIndexDown].m_x, m_controlPoints[localTipIndexDown].m_y,
-//                                m_controlPoints[localTipIndexDown].m_z, Z_FIELD));
-//
-//        // Bend vectors - static and current
-//        ngl::Vec3 bendVecStaticDown = m_segmentOrig[localTipIndexDown] - m_segmentOrig[0];
-//        ngl::Vec3 bendVecCurrentDown = m_segmentVector[localTipIndexDown] - m_segmentVector[0];
-//        ngl::Vec3 bendVecDiffDown = bendVecStaticDown - bendVecCurrentDown;
-//
-//        for (int i = 0; i < downEdges.size() - 1; ++i) {
-//            int currentIndex = downEdges[i];
-//            //   - Wind force - same as at the tip of the grass blade
-//            m_totalForce[currentIndex] +=
-//                    m_windCoof * vWindDown.dot(m_normalVector[currentIndex]) * m_normalVector[currentIndex];
-//
-//            //   - Restoration force
-//            m_totalForce[currentIndex] +=
-//                    m_stiffness[localTipIndexDown] / m_stiffness[currentIndex] * m_angularVelocity[currentIndex] * _dt *
-//                    (bendVecDiffDown / bendVecDiffDown.length());
-//        }
-//
-//        // Process up edges
-//        // Wind velocity at local tip (up edges)
-//        int localTipIndex = upEdges[upEdges.size() - 1];
-//        ngl::Vec3 vWindUp = ngl::Vec3(
-//                sim.sampleField(m_controlPoints[localTipIndex].m_x, m_controlPoints[localTipIndex].m_y,
-//                                m_controlPoints[localTipIndex].m_z, X_FIELD),
-//                sim.sampleField(m_controlPoints[localTipIndex].m_x, m_controlPoints[localTipIndex].m_y,
-//                                m_controlPoints[localTipIndex].m_z, Y_FIELD),
-//                sim.sampleField(m_controlPoints[localTipIndex].m_x, m_controlPoints[localTipIndex].m_y,
-//                                m_controlPoints[localTipIndex].m_z, Z_FIELD));
-//
-//        // Bend vectors - static and current
-//        ngl::Vec3 bendVecStatic = m_segmentOrig[localTipIndex] - m_segmentOrig[0];
-//        ngl::Vec3 bendVecCurrent = m_segmentVector[localTipIndex] - m_segmentVector[0];
-//        ngl::Vec3 bendVecDiff = bendVecStatic - bendVecCurrent;
-//
-//        for (int i = 0; i < upEdges.size() - 1; ++i) {
-//            int currentIndex = upEdges[i];
-//            //   - Wind force - same as at the tip of the grass blade
-//            m_totalForce[currentIndex] +=
-//                    m_windCoof * vWindUp.dot(m_normalVector[currentIndex]) * m_normalVector[currentIndex];
-//
-//            //   - Restoration force
-//            m_totalForce[currentIndex] +=
-//                    m_stiffness[localTipIndex] / m_stiffness[currentIndex] * m_angularVelocity[currentIndex] * _dt *
-//                    (bendVecDiff / bendVecDiff.length());
-//        }
-//    }
+    // Bending calculated separately
+
+    std::vector<int> upEdges;
+    std::vector<int> downEdges;
+    for (int i = 0; i < controlPointsNum-1; ++i)
+    {
+        if (m_segmentVector[i].m_y > 1)
+        {
+            upEdges.push_back(i);
+        }
+        else
+        {
+            downEdges.push_back(i);
+        }
+    }
+
+    if( downEdges.empty() || upEdges.empty() )
+    {
+        // Bend vectors - static and current
+        ngl::Vec3 bendVecStatic = m_segmentOrig[3] - m_segmentOrig[0];
+        ngl::Vec3 bendVecCurrent = m_segmentVector[3] - m_segmentVector[0];
+        ngl::Vec3 bendVecDiff = bendVecStatic - bendVecCurrent;
+
+        // For each segment find the total force on it
+        for (int i = 0; i < controlPointsNum-1; ++i)
+        {
+            //   - Wind force - same as at the tip of the grass blade
+            m_totalForce[i] +=
+                    m_windCoof * vWind.dot(m_normalVector[i]) * m_normalVector[i];
+
+            //   - Restoration force
+            if(bendVecDiff.length() != 0) {
+                m_totalForce[i] += m_stiffness[3] / m_stiffness[i] * m_angularVelocity[i] * _dt *
+                                   (bendVecDiff / bendVecDiff.length());
+            }
+        }
+    }
+    else
+    {
+        // Process down edges
+        // Wind velocity at local tip (up edges)
+        int localTipIndexDown = downEdges[downEdges.size() - 1];
+        ngl::Vec3 vWindDown = ngl::Vec3(
+                sim.sampleField(m_controlPoints[localTipIndexDown].m_x, m_controlPoints[localTipIndexDown].m_y,
+                                m_controlPoints[localTipIndexDown].m_z, X_FIELD),
+                sim.sampleField(m_controlPoints[localTipIndexDown].m_x, m_controlPoints[localTipIndexDown].m_y,
+                                m_controlPoints[localTipIndexDown].m_z, Y_FIELD),
+                sim.sampleField(m_controlPoints[localTipIndexDown].m_x, m_controlPoints[localTipIndexDown].m_y,
+                                m_controlPoints[localTipIndexDown].m_z, Z_FIELD));
+
+        // Bend vectors - static and current
+        ngl::Vec3 bendVecStaticDown = m_segmentOrig[localTipIndexDown] - m_segmentOrig[0];
+        ngl::Vec3 bendVecCurrentDown = m_segmentVector[localTipIndexDown] - m_segmentVector[0];
+        ngl::Vec3 bendVecDiffDown = bendVecStaticDown - bendVecCurrentDown;
+
+        for (int i = 0; i < downEdges.size() - 1; ++i) {
+            int currentIndex = downEdges[i];
+            //   - Wind force - same as at the tip of the grass blade
+            m_totalForce[currentIndex] +=
+                    m_windCoof * vWindDown.dot(m_normalVector[currentIndex]) * m_normalVector[currentIndex];
+
+            //   - Restoration force
+            if(bendVecDiffDown.length() != 0)
+            {
+                m_totalForce[currentIndex] +=
+                        m_stiffness[localTipIndexDown] / m_stiffness[currentIndex] * m_angularVelocity[currentIndex] *
+                        _dt *
+                        (bendVecDiffDown / bendVecDiffDown.length());
+            }
+        }
+
+        // Process up edges
+        // Wind velocity at local tip (up edges)
+        int localTipIndex = upEdges[upEdges.size() - 1];
+        ngl::Vec3 vWindUp = ngl::Vec3(
+                sim.sampleField(m_controlPoints[localTipIndex].m_x, m_controlPoints[localTipIndex].m_y,
+                                m_controlPoints[localTipIndex].m_z, X_FIELD),
+                sim.sampleField(m_controlPoints[localTipIndex].m_x, m_controlPoints[localTipIndex].m_y,
+                                m_controlPoints[localTipIndex].m_z, Y_FIELD),
+                sim.sampleField(m_controlPoints[localTipIndex].m_x, m_controlPoints[localTipIndex].m_y,
+                                m_controlPoints[localTipIndex].m_z, Z_FIELD));
+
+        // Bend vectors - static and current
+        ngl::Vec3 bendVecStatic = m_segmentOrig[localTipIndex] - m_segmentOrig[0];
+        ngl::Vec3 bendVecCurrent = m_segmentVector[localTipIndex] - m_segmentVector[0];
+        ngl::Vec3 bendVecDiff = bendVecStatic - bendVecCurrent;
+
+        for (int i = 0; i < upEdges.size() - 1; ++i) {
+            int currentIndex = upEdges[i];
+            //   - Wind force - same as at the tip of the grass blade
+            m_totalForce[currentIndex] +=
+                    m_windCoof * vWindUp.dot(m_normalVector[currentIndex]) * m_normalVector[currentIndex];
+
+            //   - Restoration force
+            if(bendVecDiff.length() != 0) {
+                m_totalForce[currentIndex] +=
+                        m_stiffness[localTipIndex] / m_stiffness[currentIndex] * m_angularVelocity[currentIndex] * _dt *
+                        (bendVecDiff / bendVecDiff.length());
+            }
+        }
+    }
 
     // Calculate angular velocities at control points for restorative/damping forces
     for (int i = 0; i < controlPointsNum-1; ++i)
