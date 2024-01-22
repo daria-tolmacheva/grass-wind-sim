@@ -6,9 +6,9 @@
 
 Blade::Blade()
 {
-    m_windCoof = 500.0f;
+    m_windCoof = 200.0f;
     m_dencity = 0.5f;
-    m_dampingCoof = 0.5f;
+    m_dampingCoof = 0.8f;
     m_controlPoints.resize(controlPointsNum);
     m_positionOrig.resize(controlPointsNum);
     m_segmentVector.resize(controlPointsNum - 1); // segments connecting control points

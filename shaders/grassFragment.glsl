@@ -6,9 +6,9 @@
 
 /// @brief our output fragment colour
 layout (location = 0) out vec4 fragColour;
-in vec4 colour;
+
 void main ()
 {
-    fragColour =  colour;
+    fragColour =  vec4(0.65, 0.80, 0.55, 1);
 }
 

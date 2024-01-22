@@ -11,10 +11,10 @@
 /// https://github.com/NCCA/CurveDemos/blob/main/CurveDemo/src/NGLScene.cpp
 /// commit 20351cf
 
-NGLScene::NGLScene() : m_grass(4), m_simulation(10.0, 60, 60, 60, 0.2)
+NGLScene::NGLScene() : m_grass(3), m_simulation(10.0, 60, 20, 60, 0.2)
 {
-    m_simulation.setVelocity(2.0f, Z_POS);
-  setTitle("Grass Simulation");
+    m_simulation.setVelocity(2.0f, X_POS);
+    setTitle("Grass Simulation");
 }
 
 NGLScene::~NGLScene()
@@ -44,9 +44,15 @@ void NGLScene::initializeGL()
     // Now we will create a basic Camera from the graphics library
     // This is a static camera so it only needs to be set once
     // First create Values for the camera position
+
     ngl::Vec3 from(-25.0f, 15.0f, -25.0f); // edited by me
     ngl::Vec3 to(0.0f, 5.0f, 0.0f);
     ngl::Vec3 up(0.0f, 1.0f, 0.0f);
+
+//    ngl::Vec3 from(-5.0f, 15.0f, -5.0f); // edited by me
+//    ngl::Vec3 to(20.0f, 5.0f, 20.0f);
+//    ngl::Vec3 up(0.0f, 1.0f, 0.0f);
+
     m_view = ngl::lookAt(from, to, up);
     // set the shape using FOV 45 Aspect Ratio based on Width and Height
     // The final two are near and far clipping planes of 0.5 and 10
@@ -110,12 +116,9 @@ void NGLScene::initializeGL()
                                                   {0.0f,   0.0f,   0.0f}, // third blade
                                                   {0.0f,   4.0f,   -0.5f},
                                                   {0.0f,   4.5f,   -5.0f},
-                                                  {0.0f,   1.5f,   -11.5f},
-                                                  {0.0f,   0.0f,   0.0f}, // forth blade
-                                                  {-1.0f,  8.0f,   0.0f},
-                                                  {-12.5f, 3.5f,   0.0f},
-                                                  {-16.0f, 1.5f,   0.0f} };
+                                                  {0.0f,   1.5f,   -11.5f} };
 
+    //plantControlPoints =
     m_grass.setBlades(plantControlPoints);
     m_grass.createVAO();
     glEnable(GL_DEPTH_TEST);
@@ -131,7 +134,6 @@ void NGLScene::loadMatricesToShader()
 {
   ngl::ShaderLib::use("GrassShader");
   ngl::ShaderLib::setUniform("MVP", m_project * m_view * m_mouseGlobalTX);
-//  ngl::ShaderLib::setUniform("colour", 1.0f, 1.0f, 1.0f, 1.0f);
   glUniformSubroutinesuiv(GL_GEOMETRY_SHADER, 1, &m_subroutines[m_activeSubroutine]);
   ngl::ShaderLib::setUniform("steps", m_steps);
 }

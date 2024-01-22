@@ -33,11 +33,13 @@ class Simulation
     FRIEND_TEST(Simulation, avgVelocityZ);
     FRIEND_TEST(Simulation, sampleField);
     FRIEND_TEST(Simulation, advectVelocity);
+    FRIEND_TEST(Simulation, resetVelocity);
 public:
     Simulation(float _density, int _x, int _y, int _z, float _cellSize);
 
     void simulate(float _dt, int _numIter);
     void setVelocity(float _value, Plane _entryPlane);
+    void resetVelocity();
     float sampleField(int _i, int _j, int _k, Field _field);
 
 private:

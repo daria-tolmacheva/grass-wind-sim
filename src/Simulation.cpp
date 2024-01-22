@@ -338,7 +338,6 @@ void Simulation::simulate(float _dt, int _numIter)
 
 void Simulation::setVelocity(float _value, Plane _entryPlane)
 {
-    std::fill_n(m_velocity.begin(), m_cellNum, ngl::Vec3(0.0f, 0.0f, 0.0f));
     switch (_entryPlane) {
         case Z_POS:
             for (int i = 0; i < m_dimensions.m_x; ++i)
@@ -377,4 +376,9 @@ void Simulation::setVelocity(float _value, Plane _entryPlane)
             }
             break;
     }
+}
+
+void Simulation::resetVelocity()
+{
+    std::fill_n(m_velocity.begin(), m_cellNum, ngl::Vec3(0.0f, 0.0f, 0.0f));
 }

@@ -39,7 +39,7 @@ TEST(Simulation, setVelocity)
     sim.setVelocity(2.0f, Z_NEG);
     for (int i = 0; i < sim.m_dimensions.m_x; ++i) {
         for (int j = 0; j < sim.m_dimensions.m_y; ++j) {
-            EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(i, j, 1)].m_z, 0.0f);
+            EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(i, j, 1)].m_z, 2.0f);
             EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(i, j, static_cast<int>(sim.m_dimensions.m_z-1))].m_z, -2.0f);
         }
     }
@@ -52,10 +52,18 @@ TEST(Simulation, setVelocity)
     sim.setVelocity(2.0f, X_NEG);
     for (int k = 0; k < sim.m_dimensions.m_z; ++k) {
         for (int j = 0; j < sim.m_dimensions.m_y; ++j) {
-            EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(1, j, k)].m_x, 0.0f);
+            EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(1, j, k)].m_x, 2.0f);
             EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(static_cast<int>(sim.m_dimensions.m_x-1), j, k)].m_x, -2.0f);
         }
     }
+}
+
+TEST(Simulation, resetVelocity)
+{
+    Simulation sim(10.0f, 3, 4, 5, 1.0f);
+    sim.setVelocity(2.0f, Z_POS);
+    sim.resetVelocity();
+    EXPECT_FLOAT_EQ(sim.avgVelocityZ(1, 1, 1), 0.0);
 }
 
 TEST(Simulation, integrate)
@@ -69,11 +77,6 @@ TEST(Simulation, integrate)
         }
         EXPECT_FLOAT_EQ(sim.m_velocity[sim.to1D(i, sim.m_dimensions.m_y-1, 1)].m_y, 0.0f);
     }
-}
-
-TEST(Simulation, solveIncompressibility)
-{
-    // ;--;
 }
 
 TEST(Simulation, extrapolate)
@@ -135,12 +138,3 @@ TEST(Simulation, avgVelocityZ)
     EXPECT_FLOAT_EQ(sim.avgVelocityZ(1, 1, 1), 1.0);
 }
 
-TEST(Simulation, sampleField)
-{
-    // ;--;
-}
-
-TEST(Simulation, advectVelocity)
-{
-    // ;--;
-}
