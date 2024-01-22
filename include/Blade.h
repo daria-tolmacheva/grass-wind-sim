@@ -36,7 +36,7 @@ private:
     std::vector<ngl::Vec3> m_surfaceVector; // Orthogonal to segment vector and on the blade plane
     std::vector<ngl::Vec3> m_normalVector; // Unit vector orthogonal to both segment and surface vectors
 
-    const static inline std::vector<float> m_stiffness = {0.6f, 0.3f, 0.1f};
+    const static inline std::vector<float> m_stiffness = {0.1f, 0.1f, 0.1f};
     std::vector<ngl::Vec3> m_totalForce;
     std::vector<ngl::Vec3> m_angularVelocity;
     std::vector<float> m_mass;

@@ -171,6 +171,12 @@ float Simulation::avgVelocityZ(int _i, int _j, int _k) const
 
 float Simulation::sampleField(int _i, int _j, int _k, Field _field)
 {
+    // Check for bounds
+    if (_i < 0 || _j < 0 || _k < 0)
+    {
+        return 0.0f;
+    }
+
     float h1 = 1.0f / m_cellSize;
     float h2 = 0.5f * m_cellSize;
 
@@ -183,9 +189,9 @@ float Simulation::sampleField(int _i, int _j, int _k, Field _field)
     float dz = 0.0;
 
     switch (_field) {
-        case X_FIELD: dy = 0.5f; dz = 0.5f; break;
-        case Y_FIELD: dx = 0.5f; dz = 0.5f; break;
-        case Z_FIELD: dx = 0.5f; dy = 0.5f; break;
+        case X_FIELD: dy = h2; dz = h2; break;
+        case Y_FIELD: dx = h2; dz = h2; break;
+        case Z_FIELD: dx = h2; dy = h2; break;
     }
 
     int x0 = static_cast<int>(std::min(std::floor((x-dx) * h1), m_dimensions.m_x - 1));

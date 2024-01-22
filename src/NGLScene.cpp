@@ -11,8 +11,9 @@
 /// https://github.com/NCCA/CurveDemos/blob/main/CurveDemo/src/NGLScene.cpp
 /// commit 20351cf
 
-NGLScene::NGLScene() : m_grass(4)
+NGLScene::NGLScene() : m_grass(4), m_simulation(10.0, 60, 60, 60, 0.2)
 {
+    m_simulation.setVelocity(2.0f, Z_POS);
   setTitle("Grass Simulation");
 }
 
@@ -120,6 +121,9 @@ void NGLScene::initializeGL()
     glEnable(GL_DEPTH_TEST);
 
     ngl::VAOPrimitives::createLineGrid("floor", 40, 40, 10);
+
+    startTimer(5);
+    m_previousTime = std::chrono::steady_clock::now();
 // end of edit
 }
 
@@ -187,4 +191,16 @@ void NGLScene::keyPressEvent(QKeyEvent *_event)
   }
   // finally update the GLWindow and re-draw
   update();
+}
+
+void NGLScene::timerEvent(QTimerEvent *event)
+{
+    auto now = std::chrono::steady_clock::now();
+    auto delta = std::chrono::duration<float, std::chrono::seconds::period>(now - m_previousTime).count();
+    m_previousTime = now;
+    // update sim
+    m_simulation.simulate(delta, 40);
+    // update grass
+    m_grass.updateBlades(m_simulation, delta);
+    update();
 }

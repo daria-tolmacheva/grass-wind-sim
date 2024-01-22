@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "Grass.h"
+#include "Simulation.h"
 
 //----------------------------------------------------------------------------------------------------------------------
 /// This file is edited from the NGL Curve Demo file Jon Macey:
@@ -106,10 +107,15 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
     void wheelEvent( QWheelEvent *_event);
 
+    void timerEvent( QTimerEvent * event) override;
+
     void loadMatricesToColourShader(const ngl::Vec4 &_colour);
     std::array<GLuint,2>m_subroutines;
     size_t m_activeSubroutine=0;
     float m_steps=0.1f;
+    std::chrono::steady_clock::time_point m_previousTime;
+    Simulation m_simulation;
+
 };
 
 
