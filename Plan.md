@@ -37,29 +37,12 @@ BFX week
 
 ## Week 7
 
-TBD
 1. Implement tessellation/geometry shaders(?)
-2. Refactor `Grass`/`Blade` to better fit shader needs(?)
-3. Add WindActor class + tests.
 
-## Week 8 (during Christmas)
+## After Christmas
 
-TBD
-1. Wind simulation on CPU.
-2. Refactor the fluid simulation to be calculated on GPU.
-3. Clean up documentation: update `README.md` and `Design.md`
-
-## Week 9
-
-TBD
-
-1. Simulation user controls.
-2. Update camera controls to fit my needs.
-3. Reading/writing files for demos.
-
-## Week 10
-
-TBD
-1. Design demos.
-2. Cleaning up.
-3. Finishing up anything that still needs to be done.
+1. Implement wind simulation on CPU.
+2. Implement grass dynamics.
+3. Connect everything into the simulation loop.
+4. Cleaning up.
+5. Updating documentation (README.md and Design.md)
